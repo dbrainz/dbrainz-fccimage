@@ -9,6 +9,7 @@
   "author": "Darren Brain (darren.brain@gmail.com)",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "mongodb": "^2.2.25"
   }
 }
