@@ -1,1 +1,16 @@
 <h1>Dbrainz's FCC Image Search Abstraction Layer</h1>
+
+<p>Usage : 'https://dbrainz-image.herokuapp.com/search/<i>search terms</i>?offset=1'</p>
+
+<p>Search terms are separated by '%20'. For example, to search for 'cats' and 
+'dogs' the URL would be 
+'https://dbrainz-image.herokuapp.com/search/cats%20dogs?offset=1'</p>
+
+<p>Offset can be any value between 1 and 91. If you do not supply an offset value, it will default to 1.</p>
+
+<p>Returns a JSON object containing the following fields for the first 10 images returned by the search:<br>
+<i>page_url</i> : URL for the page containing the image<br>
+<i>snippet</i> : description of the image<br>
+<i>image_url</i> : direct URL of the image<br>
+
+<p>Using the path '/latest' will return a JSON object containing information about the last 10 searches.</p>

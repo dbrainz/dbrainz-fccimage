@@ -4,12 +4,13 @@
 const express = require('express');
 const mongo = require('mongodb').MongoClient;
 const https= require('https');
+var path = require('path');
 
 var app = express();
 
 const mongoURL = "mongodb://dbrainzfcc:isearch@ds161580.mlab.com:61580/imagesearch"
 
-app.get("/", express.static("."));
+//   app.get("/", express.static("."));
 app.get("/latest", (req, res) => {
     mongo.connect(mongoURL, (err,db) => {
         if (err) throw err;
@@ -20,11 +21,12 @@ app.get("/latest", (req, res) => {
         })
     })
 });
-app.get("/search/:searchterm", (req, res) => {
 
+app.get("/search/:searchterm", (req, res) => {
+    console.log("searchterm" + req.params.searchterm);
     var searchTerms = req.params.searchterm
     var startRec = 1
-    if (req.query.offset != {}) {
+    if (req.query.offset) {
         if (req.query.offset > 91) {
             res.end(JSON.stringify({error : "Offset must be less than 92"}))
             return;
@@ -32,8 +34,11 @@ app.get("/search/:searchterm", (req, res) => {
         else {
             startRec = req.query.offset
         }
+        console.log("startRec:" + startRec);
     };
 
+
+    
     var getPath = "https://www.googleapis.com/customsearch/v1?key=AIzaSyDDeNBdKzSvils6C0qKgo6uUnNVUxSXA60&cx=012349151313725115510:nzu64kxt1ok&q=" + searchTerms + "&start=" + startRec
     var request = https.get(getPath, (response) => {
 
@@ -86,9 +91,12 @@ app.get("/search/:searchterm", (req, res) => {
     });
     
     request.on('error', (e) => {
+        console.log("startRec:" + startRec);
         console.error(e);
+    });
 });
-
+app.get("/*", (req, res) => { 
+    res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 
